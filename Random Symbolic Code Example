@@ -1,0 +1,21 @@
+def generate_symbolic_sequence(length):
+    """
+    Generate a sequence of random symbolic characters.
+    
+    Args:
+    - length (int): Length of the sequence to generate.
+    
+    Returns:
+    - sequence (str): Random sequence of symbolic characters.
+    """
+    import random
+    import string
+    
+    symbols = string.ascii_letters + string.digits + string.punctuation + ' '
+    sequence = ''.join(random.choice(symbols) for _ in range(length))
+    return sequence
+
+if __name__ == "__main__":
+    sequence_length = 1000
+    random_sequence = generate_symbolic_sequence(sequence_length)
+    print(random_sequence)
