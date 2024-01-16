@@ -1,0 +1,31 @@
+import requests
+from bs4 import BeautifulSoup
+
+def parse_blog_post(url):
+    try:
+        # Send a GET request to the URL
+        response = requests.get(url)
+
+        # Check if the request was successful (status code 200)
+        if response.status_code == 200:
+            # Parse the HTML content using BeautifulSoup
+            soup = BeautifulSoup(response.text, 'html.parser')
+
+            # Extract relevant information
+            title = soup.title.text
+            author = soup.find('span', class_='author').text
+            content = soup.find('div', class_='post-content').text
+
+            # Print the parsed information
+            print(f"Title: {title}\nAuthor: {author}\nContent: {content}")
+
+        else:
+            print(f"Error: Unable to fetch content. Status code: {response.status_code}")
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+# Example usage
+if __name__ == "__main__":
+    blog_url = "https://exampleblog.com/sample-post"
+    parse_blog_post(blog_url)
