@@ -1,0 +1,55 @@
+import tweepy
+from datetime import datetime, timedelta
+
+# Twitter API credentials
+consumer_key = 'your_consumer_key'
+consumer_secret = 'your_consumer_secret'
+access_token = 'your_access_token'
+access_token_secret = 'your_access_token_secret'
+
+# Authenticate with Twitter API
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+def get_user_tweets(username, num_tweets=100):
+    """
+    Get recent tweets for a given Twitter user.
+    """
+    tweets = api.user_timeline(screen_name=username, count=num_tweets, tweet_mode="extended")
+    return tweets
+
+def analyze_tweets(tweets):
+    """
+    Analyze basic metrics of a list of tweets.
+    """
+    total_tweets = len(tweets)
+    total_likes = sum(tweet.favorite_count for tweet in tweets)
+    total_retweets = sum(tweet.retweet_count for tweet in tweets)
+
+    return {
+        'Total Tweets': total_tweets,
+        'Total Likes': total_likes,
+        'Total Retweets': total_retweets,
+        'Average Likes per Tweet': total_likes / total_tweets if total_tweets > 0 else 0,
+        'Average Retweets per Tweet': total_retweets / total_tweets if total_tweets > 0 else 0,
+    }
+
+def main():
+    # Twitter username to analyze
+    username = 'target_username'
+
+    # Number of tweets to analyze
+    num_tweets_to_analyze = 100
+
+    # Retrieve user tweets
+    tweets = get_user_tweets(username, num_tweets_to_analyze)
+
+    # Analyze and print results
+    analysis_results = analyze_tweets(tweets)
+    print(f"Twitter Analytics for {username}:")
+    for metric, value in analysis_results.items():
+        print(f"{metric}: {value}")
+
+if __name__ == "__main__":
+    main()
