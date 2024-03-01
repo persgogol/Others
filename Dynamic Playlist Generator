@@ -1,0 +1,38 @@
+import random
+
+class PlaylistGenerator:
+    def __init__(self):
+        self.database = {
+            'happy': ['song1', 'song2', 'song3', 'song4'],
+            'sad': ['song5', 'song6', 'song7', 'song8'],
+            'calm': ['song9', 'song10', 'song11', 'song12']
+        }
+
+    def generate_playlist(self, user_input):
+        mood = self.analyze_mood(user_input)
+        if mood in self.database:
+            return self.database[mood]
+        else:
+            return []
+
+    def analyze_mood(self, user_input):
+        # Placeholder sentiment analysis (replace with actual implementation)
+        if 'happy' in user_input.lower():
+            return 'happy'
+        elif 'sad' in user_input.lower():
+            return 'sad'
+        elif 'calm' in user_input.lower():
+            return 'calm'
+        else:
+            return 'unknown'
+
+if __name__ == "__main__":
+    generator = PlaylistGenerator()
+    user_input = input("How are you feeling today? ")
+    playlist = generator.generate_playlist(user_input)
+    if playlist:
+        print("Here's your dynamic playlist:")
+        for song in playlist:
+            print(song)
+    else:
+        print("Sorry, couldn't generate a playlist based on your input.")
